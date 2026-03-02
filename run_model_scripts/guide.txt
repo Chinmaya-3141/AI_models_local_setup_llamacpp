@@ -1,0 +1,216 @@
+===============================================
+            RUN.SH USAGE GUIDE
+          AI_models/run_model_scripts
+===============================================
+
+FAQ: How to use the run.sh script to launch LLMs
+
+---
+
+Q1: What happens if I run the script with no arguments?
+
+A1:
+- The script uses the **default model** (`2.5coder`)  
+- **No system prompt** is applied  
+- Launches interactively in CLI mode  
+
+Example:
+
+    ./run.sh
+
+---
+
+Q2: How do I run the default model with a system prompt only?
+
+A2:
+- Pass the system prompt name as the **first argument**  
+- The script detects it is not a known model and uses the default model  
+
+Example:
+
+    ./run.sh qwencode_devops
+
+This loads the system prompt file:
+
+    system_prompts/qwencode_devops.txt
+
+---
+
+Q3: How do I run a specific model without a prompt?
+
+A3:
+- Pass the model alias as the first argument  
+- Do **not** pass a prompt  
+
+Example:
+
+    ./run.sh qwen3
+
+This launches the `qwen3` model interactively with **no prompt**.
+
+---
+
+Q4: How do I run a specific model with a system prompt?
+
+A4:
+- First argument: model alias  
+- Second argument: system prompt name  
+
+Example:
+
+    ./run.sh 2.5coder qwencode_devops
+
+This launches `2.5coder` with the `qwencode_devops.txt` system prompt.
+
+---
+
+Q5: How do I run in server mode?
+
+A5:
+- Add `server` as the **last argument**  
+- Works with default or specific model, with or without a prompt  
+
+Examples:
+
+    # Default model + prompt
+    ./run.sh qwencode_devops server
+
+    # Specific model + prompt
+    ./run.sh 2.5coder qwencode_devops server
+
+---
+
+Q6: How do I change the default model?
+
+A6:
+1. Open `run.sh` in a text editor.
+2. Find this line near the top:
+
+       DEFAULT_MODEL="2.5coder"
+
+3. Replace `2.5coder` with your preferred default model, e.g.:
+
+       DEFAULT_MODEL="qwen3"
+
+4. Save the file. Running `./run.sh` with no arguments now uses the new default model.
+
+---
+
+Q7: How do I add a new model?
+
+A7:
+1. Place your `.gguf` model file in `models/`.
+2. Open `run.sh` and add a new entry in the `case` block:
+
+       mymodel)
+           MODEL_PATH="$MODEL_DIR/my-model.gguf"
+           GPU_LAYERS=28
+           ;;
+
+3. Use it like any other model:
+
+       ./run.sh mymodel my_custom_prompt
+       ./run.sh mymodel my_custom_prompt server
+
+---
+
+Q8: How do I shorten long commands?
+
+A8:
+1. Use relative paths for prompts (already defaulted in the script):
+
+       ./run.sh 2.5coder qwencode_devops
+       ./run.sh qwencode_devops        # default model
+
+2. Create a shell alias (add to `~/.bashrc` or `~/.zshrc`):
+
+       alias ai='./run_model_scripts/run.sh'
+
+3. Now you can run:
+
+       ai 2.5coder qwencode_devops
+       ai qwencode_devops
+       ai qwencode_devops server
+
+---
+
+Q9: How does the script handle errors?
+
+A9:
+- If the model file does not exist:
+
+      Error: Model file not found: <path>
+
+- If the system prompt file does not exist:
+
+      Error: System prompt file not found: <path>
+
+- If an unknown model alias is used:
+
+      Error: Unknown model key '<alias>'
+
+The script then exits gracefully.
+
+---
+
+Q10: Where should my prompts and models be located?
+
+A10:
+- Models: `AI_models/models/`
+- Prompts: `AI_models/system_prompts/`
+- Script: `AI_models/run_model_scripts/run.sh`
+
+Paths are resolved **relative to the project root**, so it works from any current working directory.
+
+---
+
+Q11: What models are currently available and what aliases can I use for them?
+
+A11:
+- 2.5coder → `2.5coder`  
+- Qwen 3 → `qwen3`  
+- Any new model you add → use the alias defined in the `case` block of `run.sh`  
+
+Use these aliases as the **first argument** to the script.
+
+---
+
+Q12: Recommended usage examples
+
+A12: Here are common ways to use the updated script:
+
+1. **Default model, no prompt**
+
+       ./run.sh
+
+2. **Default model, with system prompt**
+
+       ./run.sh qwencode_devops
+
+3. **Specific model, no prompt**
+
+       ./run.sh qwen3
+
+4. **Specific model, with system prompt**
+
+       ./run.sh 2.5coder qwencode_devops
+
+5. **Default model with prompt, server mode**
+
+       ./run.sh qwencode_devops server
+
+6. **Specific model with prompt, server mode**
+
+       ./run.sh 2.5coder qwencode_devops server
+
+7. **Using shell alias**
+
+       ai 2.5coder qwencode_devops
+       ai qwencode_devops
+       ai qwencode_devops server
+
+These examples show the script’s **flexibility** for default, model, prompt, and server combinations.
+
+---
+
+✅ End of Guide

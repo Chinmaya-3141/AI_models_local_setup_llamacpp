@@ -1,0 +1,10 @@
+# Ignore model binaries
+models/
+
+# Ignore llama.cpp build and binaries
+llama.cpp/
+
+# Logs, temp files
+*.log
+*.tmp
+*.bak
