@@ -361,6 +361,109 @@ Only affects build speed.
 
 ---
 
+Below is a **clean section** you can append to your guide (I structured it to match your existing style and tone).
+
+You can place it right before **“Understanding the Build Process”** or make it a new section 11.
+
+---
+
+# Managing `llama.cpp` as a Git Submodule
+
+This project uses **`llama.cpp` as a Git submodule**.
+
+A submodule allows this repository to depend on a specific version of `llama.cpp` without copying its source code. Instead of tracking all of `llama.cpp`, Git stores a pointer to an exact commit.
+
+This provides:
+
+* Reproducibility (everyone builds the same version)
+* Controlled updates
+* Clean repository structure
+* No nested Git repository issues
+
+---
+
+## Cloning the Project (Important)
+
+When cloning this repository, you must initialize the submodule:
+
+```bash
+git clone <your-repo-url>
+cd AI_models_local_setup_llamacpp
+git submodule update --init --recursive
+```
+
+This downloads the exact pinned version of `llama.cpp`.
+
+---
+
+# Updating `llama.cpp` to Upstream
+
+If you decide to update to the latest upstream version:
+
+```bash
+cd llama.cpp
+git pull origin master
+cd ..
+git add llama.cpp
+git commit -m "Update llama.cpp to latest upstream"
+git push
+```
+
+This updates the submodule pointer in your repository.
+
+⚠️ Always rebuild and test after updating.
+
+---
+
+# Rolling Back if an Update Breaks
+
+If a newer upstream version introduces breaking changes, you can revert safely.
+
+## Option 1 — Roll Back Entire Project
+
+Find a previous commit:
+
+```bash
+git log
+```
+
+Then:
+
+```bash
+git checkout <previous_commit_hash>
+git submodule update --init --recursive
+```
+
+This restores both your project and the exact working `llama.cpp` version.
+
+---
+
+## Option 2 — Roll Back Only `llama.cpp`
+
+```bash
+cd llama.cpp
+git checkout <older_commit_hash>
+cd ..
+git add llama.cpp
+git commit -m "Rollback llama.cpp to stable version"
+```
+
+---
+
+# Why This Is Important
+
+Each commit in this repository captures:
+
+* Your scripts
+* Your configuration
+* The exact `llama.cpp` version
+
+If something breaks, you can always return to a known working state.
+
+This provides stability while still allowing controlled upgrades.
+
+---
+
 # Final Result
 
 After following this guide:

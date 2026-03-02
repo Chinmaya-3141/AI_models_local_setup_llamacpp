@@ -1,11 +1,13 @@
-# Ignore model binaries
+# Model files
 models/
 
-# Ignore llama.cpp build and binaries
+# llama.cpp build artifacts
 llama.cpp/build/
 
-# Logs, temp files
+# Logs & temp
 *.log
 *.tmp
 *.bak
+
+# Debug artifacts
 project_tree.txt
