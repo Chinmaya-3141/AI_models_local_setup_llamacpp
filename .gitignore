@@ -2,9 +2,10 @@
 models/
 
 # Ignore llama.cpp build and binaries
-llama.cpp/
+llama.cpp/build/
 
 # Logs, temp files
 *.log
 *.tmp
 *.bak
+project_tree.txt
