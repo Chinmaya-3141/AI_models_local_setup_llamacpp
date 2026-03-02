@@ -211,6 +211,16 @@ A12: Here are common ways to use the updated script:
 
 These examples show the script’s **flexibility** for default, model, prompt, and server combinations.
 
+
+Downloading Models
+
+This repository does not include the model files. Please download the models and place them in the `models/` folder.
+
+| Model Alias | Model Name | Download Link |
+|------------|------------|---------------|
+| 2.5coder   | Qwen 2.5 Coder 7B Instruct | [Download link](https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF/blob/main/qwen2.5-coder-7b-instruct-q4_k_m.gguf) |
+| qwen3      | Qwen 3 8B Base | [Download link](https://huggingface.co/Qwen/Qwen3-8B-GGUF/blob/main/Qwen3-8B-Q4_K_M.gguf) |
+
 ---
 
 ✅ End of Guide
